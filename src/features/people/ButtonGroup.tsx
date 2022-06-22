@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { destroyPersonAsync } from './PersonSlice';
 
 export default function ButtonGroup(props: any) {
+
+    const [showModal, setShowModal] = useState(false)
 
     function handleClick(e: any) {
         const payload = {
@@ -11,7 +13,9 @@ export default function ButtonGroup(props: any) {
         }
         props.dispatch(destroyPersonAsync(payload));
     }
+
     return <div className="btn-group float-end">
+
         {
             props.editing ?
                 <button
