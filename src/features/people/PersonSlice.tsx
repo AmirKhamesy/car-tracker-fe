@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import produce from "immer";
 import { RootState } from "../../app/store";
-import { fetchPeople , createPerson} from "./personAPI";
+import { fetchPeople , createPerson, updatePerson, destroyPerson} from "./personAPI";
 
 export enum Statuses {
   Initial = "Not Fetched",
@@ -18,6 +18,12 @@ export interface PersonFormData {
       firstName: string;
       lastName: string;
       email: string;
+  }
+}
+
+export interface PersonDeleteData {
+  person: {
+      person_id: number;
   }
 }
 
@@ -66,6 +72,22 @@ export const fetchPeopleAsync = createAsyncThunk(
   }
 );
 
+export const updatePersonAsync = createAsyncThunk(
+  'people/updatePerson',
+  async (payload: PersonFormData) => {
+      const response = await updatePerson(payload);
+      return response;
+  }
+)
+
+export const destroyPersonAsync = createAsyncThunk(
+  'people/destroyPerson',
+  async (payload: PersonDeleteData) => {
+      const response = await destroyPerson(payload);
+      return response;
+  }
+)
+
 export const personSlice = createSlice({
   name: "people",
   initialState,
@@ -87,58 +109,58 @@ export const personSlice = createSlice({
         return produce(state, (draftState) => {
           draftState.status = Statuses.Error;
         });
+      })
+      .addCase(createPersonAsync.pending, (state) => {
+        return produce(state, (draftState) => {
+          draftState.status = Statuses.Loading;
+        });
+      })
+      .addCase(createPersonAsync.fulfilled, (state, action) => {
+        return produce(state, (draftState) => {
+          draftState.people.push(action.payload);
+          draftState.status = Statuses.UpToDate;
+        });
+      })
+      .addCase(createPersonAsync.rejected, (state) => {
+        return produce(state, (draftState) => {
+          draftState.status = Statuses.Error;
+        });
+      })
+      .addCase(destroyPersonAsync.pending, (state) => {
+        return produce(state, (draftState) => {
+          draftState.status = Statuses.Loading;
+        });
+      })
+      .addCase(destroyPersonAsync.fulfilled, (state, action) => {
+        return produce(state, (draftState) => {
+          draftState.people = action.payload;
+          draftState.status = Statuses.UpToDate;
+        });
+      })
+      .addCase(destroyPersonAsync.rejected, (state) => {
+        return produce(state, (draftState) => {
+          draftState.status = Statuses.Error;
+        });
+      })
+      .addCase(updatePersonAsync.pending, (state) => {
+        return produce(state, (draftState) => {
+          draftState.status = Statuses.Loading;
+        });
+      })
+      .addCase(updatePersonAsync.fulfilled, (state, action) => {
+        return produce(state, (draftState) => {
+          const index = draftState.people.findIndex(
+            (person) => person.id === action.payload.id
+          );
+          draftState.people[index] = action.payload;
+          draftState.status = Statuses.UpToDate;
+        });
+      })
+      .addCase(updatePersonAsync.rejected, (state) => {
+        return produce(state, (draftState) => {
+          draftState.status = Statuses.Error;
+        });
       });
-    //   .addCase(createPersonAsync.pending, (state) => {
-    //     return produce(state, (draftState) => {
-    //       draftState.status = Statuses.Loading;
-    //     });
-    //   })
-    //   .addCase(createPersonAsync.fulfilled, (state, action) => {
-    //     return produce(state, (draftState) => {
-    //       draftState.people.push(action.payload);
-    //       draftState.status = Statuses.UpToDate;
-    //     });
-    //   })
-    //   .addCase(createPersonAsync.rejected, (state) => {
-    //     return produce(state, (draftState) => {
-    //       draftState.status = Statuses.Error;
-    //     });
-    //   })
-    //   .addCase(destroyPersonAsync.pending, (state) => {
-    //     return produce(state, (draftState) => {
-    //       draftState.status = Statuses.Loading;
-    //     });
-    //   })
-    //   .addCase(destroyPersonAsync.fulfilled, (state, action) => {
-    //     return produce(state, (draftState) => {
-    //       draftState.people = action.payload;
-    //       draftState.status = Statuses.UpToDate;
-    //     });
-    //   })
-    //   .addCase(destroyPersonAsync.rejected, (state) => {
-    //     return produce(state, (draftState) => {
-    //       draftState.status = Statuses.Error;
-    //     });
-    //   })
-    //   .addCase(updatePersonAsync.pending, (state) => {
-    //     return produce(state, (draftState) => {
-    //       draftState.status = Statuses.Loading;
-    //     });
-    //   })
-    //   .addCase(updatePersonAsync.fulfilled, (state, action) => {
-    //     return produce(state, (draftState) => {
-    //       const index = draftState.people.findIndex(
-    //         (post) => post.id === action.payload.id
-    //       );
-    //       draftState.people[index] = action.payload;
-    //       draftState.status = Statuses.UpToDate;
-    //     });
-    //   })
-    //   .addCase(updatePersonAsync.rejected, (state) => {
-    //     return produce(state, (draftState) => {
-    //       draftState.status = Statuses.Error;
-    //     });
-    //   });
   },
 });
 
