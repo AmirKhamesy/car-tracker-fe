@@ -35,7 +35,7 @@ export default function PersonForm() {
     setLastName('');
     setEmail('');
   }
-  return <div>
+  return <div className="border p-3">
     <h1>Create a new person</h1>
     <form >
       <input
