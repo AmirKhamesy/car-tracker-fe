@@ -36,18 +36,21 @@ export default function Person(props:any) {
   const editableFirstName = <input 
                           type="text" 
                           className="form-control text-start" 
+                          placeholder="First Name"
                           value={firstName} 
-                          onChange={(e) => setFirstName(props.person.firstName)} />;
+                          onChange={(e) => setFirstName(e.target.value)} />;
   const editableLastName = <input 
                           type="text" 
                           className="form-control text-start" 
+                          placeholder="Last Name"
                           value={lastName} 
-                          onChange={(e) => setLastName(props.person.lastName)} />;
+                          onChange={(e) => setLastName(e.target.value)} />;
   const editableEmail = <input 
                           type="text" 
                           className="form-control text-start" 
+                          placeholder="Email"
                           value={email} 
-                          onChange={(e) => setEmail(props.person.email)} />;
+                          onChange={(e) => setEmail(e.target.value)} />;
   const submitButton = <button
                           type="submit"
                           className="form-control"

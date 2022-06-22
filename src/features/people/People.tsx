@@ -54,7 +54,7 @@ function submitEdit(formData:any) {
       </div>
   }
 
-  return <div><h1>Posts</h1>
+  return <div><h1>People</h1>
         {contents}
   </div>
 }
