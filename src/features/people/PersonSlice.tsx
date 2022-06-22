@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import produce from "immer";
 import { RootState } from "../../app/store";
-import { fetchPeople } from "./personAPI";
+import { fetchPeople , createPerson} from "./personAPI";
 
 export enum Statuses {
   Initial = "Not Fetched",
@@ -9,6 +9,16 @@ export enum Statuses {
   UpToDate = "Up To Date",
   Deleted = "Deleted",
   Error = "Error",
+}
+
+
+export interface PersonFormData {
+  person: {
+      id?: string;
+      firstName: string;
+      lastName: string;
+      email: string;
+  }
 }
 
 export interface PersonState {
@@ -38,6 +48,15 @@ const initialState: PeopleState = {
   ],
   status: Statuses.Initial,
 };
+
+export const createPersonAsync = createAsyncThunk(
+  'people/createPerson',
+  async (payload: PersonFormData  ) => {
+      const response = await createPerson(payload);
+
+      return response;
+  }
+)
 
 export const fetchPeopleAsync = createAsyncThunk(
   "people/fetchPeople",
