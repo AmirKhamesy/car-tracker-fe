@@ -67,7 +67,10 @@ export default function Person(props: any) {
 
 
 
-    const personCars = <Cars cars={props.person.cars} />
+    const personCars = <Cars
+        cars={props.person.cars}
+        dispatch={props.dispatch}
+    />
 
 
     return <div className="border p-5">

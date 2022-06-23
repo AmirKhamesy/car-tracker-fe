@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../app/hooks";
 import { AppDispatch } from "../../app/store";
+import CarForm from "../cars/CarForm";
 import Person from "./Person";
 import PersonForm from "./PersonForm";
 import { fetchPeopleAsync, selectPeople, selectStatus, Statuses, updatePersonAsync } from "./PersonSlice";
@@ -39,6 +40,7 @@ export default function People() {
       <div className="card-body">
         <h3>{status}</h3>
         <PersonForm />
+        <CarForm />
         {people && people.length > 0 && people.map(person => {
           return <div key={person.id} style={{ margin: "5em" }}>
             <Person

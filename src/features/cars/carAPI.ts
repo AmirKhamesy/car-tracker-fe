@@ -18,7 +18,7 @@ export async function fetchCars() {
 
   export async function createCar(payload: CarFormData) {
     const car = payload.car;
-    return fetch(`${API_URL}/car.json`, {
+    return fetch(`${API_URL}/cars.json`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -36,7 +36,7 @@ export async function fetchCars() {
 
   export async function updateCar(payload: CarFormData) {
     const car = payload.car;
-    return fetch(`${API_URL}/car/${car.id}.json`, {
+    return fetch(`${API_URL}/cars/${car.id}.json`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
