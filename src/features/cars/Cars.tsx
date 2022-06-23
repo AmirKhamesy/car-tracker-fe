@@ -3,17 +3,15 @@ import Car from './Car'
 
 
 export interface CarModelValues {
-    created_at: String
-    id: Number
-    make: String
-    model: String
-    person_id: Number
-    price: Number
-    updated_at: String
-    year: Number
+    created_at: String;
+    id: Number;
+    make: String;
+    model: String;
+    person_id: Number;
+    price: Number;
+    updated_at: String;
+    year: Number;
 }
-
-
 
 export interface CarModelView {
     car: {
