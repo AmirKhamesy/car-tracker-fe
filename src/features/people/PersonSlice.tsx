@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import produce from "immer";
 import { RootState } from "../../app/store";
-import { fetchPeople , createPerson, updatePerson, destroyPerson} from "./personAPI";
+import { fetchPeople, createPerson, updatePerson, destroyPerson } from "./personAPI";
 
 export enum Statuses {
   Initial = "Not Fetched",
@@ -14,16 +14,16 @@ export enum Statuses {
 
 export interface PersonFormData {
   person: {
-      id?: string;
-      firstName: string;
-      lastName: string;
-      email: string;
+    id?: string;
+    firstName: string;
+    lastName: string;
+    email: string;
   }
 }
 
 export interface PersonDeleteData {
   person: {
-      person_id: number;
+    person_id: number;
   }
 }
 
@@ -57,10 +57,10 @@ const initialState: PeopleState = {
 
 export const createPersonAsync = createAsyncThunk(
   'people/createPerson',
-  async (payload: PersonFormData  ) => {
-      const response = await createPerson(payload);
+  async (payload: PersonFormData) => {
+    const response = await createPerson(payload);
 
-      return response;
+    return response;
   }
 )
 
@@ -75,16 +75,16 @@ export const fetchPeopleAsync = createAsyncThunk(
 export const updatePersonAsync = createAsyncThunk(
   'people/updatePerson',
   async (payload: PersonFormData) => {
-      const response = await updatePerson(payload);
-      return response;
+    const response = await updatePerson(payload);
+    return response;
   }
 )
 
 export const destroyPersonAsync = createAsyncThunk(
   'people/destroyPerson',
   async (payload: PersonDeleteData) => {
-      const response = await destroyPerson(payload);
-      return response;
+    const response = await destroyPerson(payload);
+    return response;
   }
 )
 
@@ -164,7 +164,7 @@ export const personSlice = createSlice({
   },
 });
 
-export const {} = personSlice.actions;
+export const { } = personSlice.actions;
 
 export const selectPeople = (state: RootState) => state.people.people;
 

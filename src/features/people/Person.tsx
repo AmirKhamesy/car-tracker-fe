@@ -64,6 +64,30 @@ export default function Person(props: any) {
         {editableLastName}
     </div>
 
+    interface CarShowDetails {
+        created_at: String
+        id: Number
+        make: String
+        model: String
+        person_id: Number
+        price: Number
+        updated_at: String
+        year: Number
+    }
+
+
+    const personCars =
+        <div>
+            {props.person.cars && props.person.cars.length > 0 && props.person.cars.map((car: CarShowDetails) => {
+                { console.log(car) }
+                return <div key={`car-id-${car.id}`} style={{ margin: "5em" }}>
+                    <p>{car.year + " " + car.make + " " + car.model}</p>
+                </div>
+            })}
+
+
+        </div>
+
 
     return <div className="border p-5">
         <div className="row">
@@ -90,5 +114,9 @@ export default function Person(props: any) {
                 {isEditing ? submitButton : ""}
             </div>
         </div>
+        <div>
+            {personCars}
+        </div>
+
     </div >;
 }
