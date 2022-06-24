@@ -55,7 +55,7 @@ export default function CarForm() {
   useEffect(() => {
     let mounted = true;
     if (mounted) {
-      people && setPerson_id(people[0].id as any)
+      people && people.length > 0 && setPerson_id(people[0].id as any)
     }
 
     return () => {
