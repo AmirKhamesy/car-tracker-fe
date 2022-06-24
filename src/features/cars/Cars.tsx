@@ -33,7 +33,8 @@ export interface CarModelView {
 
 interface CarShowDetails {
     cars: CarModelValues[],
-    dispatch: any
+    dispatch: any,
+    person: any
 }
 export default function Cars(props: CarShowDetails) {
     const cars = useAppSelector(selectCars);
@@ -43,6 +44,7 @@ export default function Cars(props: CarShowDetails) {
 
     useEffect(() => {
         props.dispatch(fetchCarsAsync());
+
     }, [props.dispatch]);
 
     function toggleCarEditForm(car_id?: Number) {
@@ -57,23 +59,29 @@ export default function Cars(props: CarShowDetails) {
         props.dispatch(updateCarAsync(formData));
         toggleCarEditForm();
     }
+
+
     return (
         <div>
             {
                 status !== Statuses.UpToDate ?
                     <div>{status}</div>
                     :
-                    cars && cars.length > 0 && cars.map((car: any) => {
-                        return <Car
-                            car={car}
-                            key={`car-${car.id}-owner-${car.person_id}`}
-                            car_id={car.id}
-                            dispatch={props.dispatch}
-                            toggleEditForm={() => toggleCarEditForm(car.id)}
-                            submitEdit={submitEdit}
-                            carToEdit={carToEdit}
-                        />
+                    cars && cars.length > 0 &&
+                    cars.filter(car => {
+                        return car.person_id == props.person.id
                     })
+                        .map((car: any) => {
+                            return <Car
+                                car={car}
+                                key={`car-${car.id}-owner-${car.person_id}`}
+                                car_id={car.id}
+                                dispatch={props.dispatch}
+                                toggleEditForm={() => toggleCarEditForm(car.id)}
+                                submitEdit={submitEdit}
+                                carToEdit={carToEdit}
+                            />
+                        })
             }
         </div>
 

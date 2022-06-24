@@ -23,7 +23,7 @@ export default function ButtonGroup(props: any) {
             <Modal.Header closeButton>
                 <Modal.Title>Deletion confirmation</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Are you sure you want to delete this person, this action cannot be un-done.</Modal.Body>
+            <Modal.Body>Are you sure you want to delete this person, this action cannot be un-done and will delete any associated cars with the owner.</Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                     Cancel

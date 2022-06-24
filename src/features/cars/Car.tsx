@@ -42,7 +42,7 @@ export default function Car(props: any) {
       {props.car.year + " " + props.car.make + " " + props.car.model}
     </h2>
   );
-  const priceElement = <h2 className="title text-start">${props.car.price}</h2>;
+  const priceElement = <h2 className="title text-start text-success">${props.car.price}</h2>;
   const editableMake = (
     <input
       type="text"

@@ -70,6 +70,7 @@ export default function Person(props: any) {
     const personCars = <Cars
         cars={props.person.cars}
         dispatch={props.dispatch}
+        person={props.person}
     />
 
 
