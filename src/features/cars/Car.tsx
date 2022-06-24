@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Form } from "react-bootstrap";
+import { useAppSelector } from "../../app/hooks";
+import { selectPeople } from "../people/PersonSlice";
 import ButtonGroup from "./ButtonGroup";
 import { CarModelView } from "./Cars";
 
@@ -9,6 +12,8 @@ export default function Car(props: any) {
   const [price, setPrice] = useState(props.car.price);
   const [person_id, setPerson_id] = useState(props.car.person_id);
   const [isEditing, setIsEditing] = useState(props.carToEdit === props.car.id);
+  const people = useAppSelector(selectPeople);
+
   useEffect(() => {
     setIsEditing(props.carToEdit === props.car.id);
   }, [props.carToEdit, props.car.id]);
@@ -80,13 +85,22 @@ export default function Car(props: any) {
     />
   );
   const editableOwner = (
-    <input
-      type="text"
-      className="form-control text-start"
-      placeholder="Owner"
-      value={person_id}
-      onChange={(e) => setPerson_id(e.target.value)}
-    />
+    people && people.length > 0 && (
+      <Form.Select
+        onChange={(event) => setPerson_id(event.target.value as any)}
+      >
+        {people.map((person) => {
+          return (
+            <option
+              value={person.id}
+              key={`${person.firstName}-${person.lastName}-option`}
+            >
+              {person.firstName} {person.lastName}
+            </option>
+          );
+        })}
+      </Form.Select>
+    )
   );
 
   const submitButton = (
@@ -115,6 +129,17 @@ export default function Car(props: any) {
       {editableOwner}
     </div>
   );
+
+  useEffect(() => {
+    let mounted = true;
+    if (mounted) {
+      people && setPerson_id(people[0].id as any)
+    }
+
+    return () => {
+      mounted = false
+    }
+  }, [people])
 
   return (
     <div className="border p-5">
