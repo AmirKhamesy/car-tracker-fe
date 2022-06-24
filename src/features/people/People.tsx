@@ -5,7 +5,13 @@ import { AppDispatch } from "../../app/store";
 import CarForm from "../cars/CarForm";
 import Person from "./Person";
 import PersonForm from "./PersonForm";
-import { fetchPeopleAsync, selectPeople, selectStatus, Statuses, updatePersonAsync } from "./PersonSlice";
+import {
+  fetchPeopleAsync,
+  selectPeople,
+  selectStatus,
+  Statuses,
+  updatePersonAsync,
+} from "./PersonSlice";
 
 export default function People() {
   const people = useAppSelector(selectPeople);
@@ -34,29 +40,38 @@ export default function People() {
   let contents;
 
   if (status !== Statuses.UpToDate) {
-    contents = <div>{status}</div>
+    contents = <div>{status}</div>;
   } else {
-    contents = <div className="card">
-      <div className="card-body">
-        <h3>{status}</h3>
-        <PersonForm />
-        <CarForm />
-        {people && people.length > 0 && people.map(person => {
-          return <div key={person.id} style={{ margin: "5em" }}>
-            <Person
-              dispatch={dispatch}
-              person={person}
-              toggleEditForm={() => toggleEditForm(person.id)}
-              personToEdit={personToEdit}
-              submitEdit={submitEdit}
-            />
-          </div>
-        })}
+    contents = (
+      <div className="card">
+        <div className="card-body">
+          <h3>{status}</h3>
+          <PersonForm />
+          <CarForm />
+          {people &&
+            people.length > 0 &&
+            people.map((person) => {
+              return (
+                <div key={person.id} style={{ margin: "5em" }}>
+                  <Person
+                    dispatch={dispatch}
+                    person={person}
+                    toggleEditForm={() => toggleEditForm(person.id)}
+                    personToEdit={personToEdit}
+                    submitEdit={submitEdit}
+                  />
+                </div>
+              );
+            })}
+        </div>
       </div>
-    </div>
+    );
   }
 
-  return <div><h1>Car Tracker</h1>
-    {contents}
-  </div>
+  return (
+    <div>
+      <h1>Car Tracker</h1>
+      {contents}
+    </div>
+  );
 }
