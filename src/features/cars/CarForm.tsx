@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../app/hooks";
@@ -52,6 +52,18 @@ export default function CarForm() {
     setYear(0);
   }
 
+  useEffect(() => {
+    let mounted = true;
+    if (mounted) {
+      people && setPerson_id(people[0].id as any)
+    }
+
+    return () => {
+      mounted = false
+    }
+  }, [people])
+
+
   return (
     <div className="border p-3">
       <h1>Create a new Car</h1>
@@ -88,14 +100,7 @@ export default function CarForm() {
           value={year && year !== 0 ? year : ("" as any)}
           onChange={(e) => setYear(e.target.value as any)}
         />
-        <input
-          type="number"
-          className="form-control text-start mb-2"
-          name="Owner"
-          placeholder="Owner"
-          value={person_id && person_id !== 0 ? person_id : ("" as any)}
-          onChange={(e) => setPerson_id(e.target.value as any)}
-        />
+
         {people && people.length > 0 && (
           <Form.Select
             onChange={(event) => setPerson_id(event.target.value as any)}
