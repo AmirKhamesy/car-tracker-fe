@@ -45,7 +45,6 @@ export default function People() {
     contents = (
       <div className="card">
         <div className="card-body">
-          <h3>{status}</h3>
           <PersonForm />
           <CarForm />
           {people &&
