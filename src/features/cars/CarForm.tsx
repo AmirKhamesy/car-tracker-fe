@@ -119,7 +119,7 @@ export default function CarForm() {
         )}
         <button
           type="submit"
-          className="btn btn-primary"
+          className="btn btn-primary  mt-2"
           onClick={(e) => submitHandler(e)}
         >
           Submit
